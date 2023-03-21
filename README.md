@@ -2,8 +2,12 @@
 
 Plugin that provides automatic adding of words to end block of codes. (Ex. Ruby if ... end or do ... end syntax)
 
-To use it copy __endwise/__ directory to your plugins folder
-
+To use it repo files to __endwise/__ directory to your plugins folder or
+or clone repo to Your plugins directory (default `$HOME/.config/lite-xl/plugins`)
+```sh
+git clone https://github.com/LolsonX/endwise-lite-xl endwise
+```
+** Remember to always keep files in directory named __endwise/__ otherwise plugin will not work**
 ## Features
   * Add end for diffrent languages
   * Allow to create new rules in Your init.lua file
