@@ -4,6 +4,7 @@ local config = require "core.config"
 local common = require "core.common"
 local core = require "core"
 local command = require "core.command"
+local languages = require "plugins.endwise.languages"
 
 local add = function(lang_settings)
   table.insert(config.plugins.endwise.languages, lang_settings)
@@ -27,23 +28,7 @@ end
 
 config.plugins.endwise = common.merge({
   enabled = true,
-  languages = {
-    {
-      name = "Ruby",
-      enabled = false,
-      filename = ".rb$",
-      addition = "end",
-      words = { "module", "class", "def", "if", "unless", "case", "while", "until", "begin", "do" },
-      -- :word: is used to substitute for each word from words list
-      patterns = { "^%s*(:word:).*$", -- :word: starts the line
-                   "^%s*%a*%s*(=)%s*(:word:).*$" -- :word: is first word after = sign
-      },
-      -- excludes are regexp that cannot be matched like for example Ruby3.0 endless method definition
-      excludes = { "^%s*(def)%s+%a+%s*(=).*$", -- endless method definition
-                   "%s+(end)%s*$" -- line ending with end word
-      }
-    },
-  },
+  languages = languages,
   enable = enable,
   add = add,
   -- The config specification used by the settings gui
@@ -92,7 +77,8 @@ command.add("core.docview", {
       local exclude_matched = match_any_pattern(last_line, matched.excludes, matched.words)
       if pattern_matched and not exclude_matched then
         local _, indentation_level = last_line:gsub(dv.doc:get_indent_string(), "")
-        local append = (dv.doc:get_indent_string():rep(indentation_level) or "") .. matched.addition
+        local indentation = dv.doc:get_indent_string():rep(indentation_level) or ""
+        local append = indentation .. matched.addition
         DocView.on_text_input(dv, "\n" .. append)
         dv.doc:move_to(-(#append + 1))
         DocView.on_text_input(dv, dv.doc:get_indent_string())

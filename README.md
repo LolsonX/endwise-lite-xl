@@ -2,7 +2,7 @@
 
 Plugin that provides automatic adding of words to end block of codes. (Ex. Ruby if ... end or do ... end syntax)
 
-To use it copy __endwise.lua__ to your plugins folder
+To use it copy __endwise/__ directory to your plugins folder
 
 ## Features
   * Add end for diffrent languages
@@ -50,7 +50,7 @@ It attaches new behaviour after original command so it should not break normal b
  - [x] Add possibility to add new languages via init.lua
  - Languages
    - [x] Add support for Ruby
-   - [ ] Add support for Lua
+   - [x] Add support for Lua
    - [ ] Add support for Elixir
    - [ ] Add support for Crystal
    
