@@ -1,6 +1,5 @@
 -- mod-version:3
 local DocView = require "core.docview"
-local Doc = require "core.doc"
 local config = require "core.config"
 local common = require "core.common"
 local core = require "core"
@@ -16,12 +15,12 @@ local enable = function(name)
   for idx, lang in ipairs(config.plugins.endwise.languages) do
     if lang.name == name then index = idx end
   end
-  
+
   if index == nil then
     core.log("[Error] Endwise: Config for " .. name .. " not found.")
-    return 
+    return
   end
-  
+
   config.plugins.endwise.languages[index].enabled = true
   core.log("Endwise: Enabled endwise for: " .. name)
 end
@@ -77,7 +76,7 @@ command.add("core.docview", {
     if config.plugins.endwise.enabled then
       local matched = false
       local filename = dv.doc.filename or ""
-      for _idx, settings in ipairs(config.plugins.endwise.languages) do
+      for _, settings in ipairs(config.plugins.endwise.languages) do
         if filename:match(settings.filename) then
           matched = settings
           break
@@ -89,7 +88,9 @@ command.add("core.docview", {
       if not matched.enabled then return end
 
       local last_line = dv.doc.lines[dv.last_line1]
-      if match_any_pattern(last_line, matched.patterns, matched.words) and not match_any_pattern(last_line, matched.excludes, matched.words) then
+      local pattern_matched = match_any_pattern(last_line, matched.patterns, matched.words)
+      local exclude_matched = match_any_pattern(last_line, matched.excludes, matched.words)
+      if pattern_matched and not exclude_matched then
         local _, indentation_level = last_line:gsub(dv.doc:get_indent_string(), "")
         local append = (dv.doc:get_indent_string():rep(indentation_level) or "") .. matched.addition
         DocView.on_text_input(dv, "\n" .. append)
