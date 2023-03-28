@@ -9,6 +9,7 @@ local languages = {
     words = { "module", "class", "def", "if", "unless", "case", "while", "until", "begin", "do" },
     -- :word: is used to substitute for each word from words list
     patterns = { "^%s*(:word:).*$", -- :word: starts the line
+                 "(:word:)%s+|%s*.+%s*|%s*$",
                  "^%s*%a*%s*(=)%s*(:word:).*$" -- :word: is first word after = sign ex. multiline ternary operator
     },
     -- excludes are regexp that cannot be matched like for example Ruby3.0 endless method definition
