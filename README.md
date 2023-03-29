@@ -17,12 +17,14 @@ git clone https://github.com/LolsonX/endwise-lite-xl endwise
 
 ### Simple config to start given language
 ```lua
+local _endwise = require "plugins.endwise" -- sets up everything properly during startup
 local config = require "core.config"
 
 config.plugins.endwise.enable("Ruby")
 ```
 ### Add custom rules to languages
 ```lua
+local _endwise = require "plugins.endwise" -- sets up everything properly during startup
 local config = require "core.config"
 
 config.plugins.endwise.add({
